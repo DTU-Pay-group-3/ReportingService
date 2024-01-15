@@ -28,6 +28,20 @@ public class ReportingService {
 		return report.join();
 	}
 
+	public List<LoggedTransaction> getReportsMerchant(String merchantId) {
+		report = new CompletableFuture<>();
+		Event event = new Event("ReportMerchantRequested", new Object[] {merchantId});
+		queue.publish(event);
+		return report.join();
+	}
+
+	public List<LoggedTransaction> getReportsManager() {
+		report = new CompletableFuture<>();
+		Event event = new Event("ReportManagerRequested", new Object[] {});
+		queue.publish(event);
+		return report.join();
+	}
+
 	public void handleReportGenerated(Event e) {
 		//TODO Not sure if this works
 		var r = e.getArgument(0, new ArrayList<LoggedTransaction>().getClass());

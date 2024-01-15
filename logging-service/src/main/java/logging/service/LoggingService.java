@@ -18,6 +18,8 @@ public class LoggingService {
         this.queue = q;
         this.queue.addHandler("MoneyTransferred", this::handleMoneyTransferred);
         this.queue.addHandler("ReportCustomerRequested", this::handleReportCustomerRequested);
+        this.queue.addHandler("ReportMerchantRequested", this::handleReportMerchantRequested);
+        this.queue.addHandler("ReportManagerRequested", this::handleReportManagerRequested);
     }
 
     public void handleMoneyTransferred(Event ev) {
@@ -27,7 +29,7 @@ public class LoggingService {
 //        registeredTransaction.complete(t);
     }
 
-    public void handleReportCustomerRequested(Event ev) {
+    public List<LoggedTransaction> handleReportCustomerRequested(Event ev) {
         var customerId = ev.getArgument(0, String.class);
 
         List<LoggedTransaction> transactionsForCustomer = new ArrayList<>();
@@ -39,6 +41,29 @@ public class LoggingService {
 
         Event event = new Event("ReportGenerated", new Object[] { transactionsForCustomer });
         queue.publish(event);
+        return transactionsForCustomer;
+    }
+
+    public List<LoggedTransaction> handleReportMerchantRequested(Event ev) {
+        var merchantId = ev.getArgument(0, String.class);
+
+        List<LoggedTransaction> transactionsForMerchant = new ArrayList<>();
+        for (LoggedTransaction t: loggedTransactionList) {
+            if (t.to.equals(merchantId)) {
+                //Merchant must not see customer ("from")
+                transactionsForMerchant.add(new LoggedTransaction(t.amount, "", t.to, t.token));
+            }
+        }
+
+        Event event = new Event("ReportGenerated", new Object[] { transactionsForMerchant });
+        queue.publish(event);
+        return transactionsForMerchant;
+    }
+
+    public List<LoggedTransaction> handleReportManagerRequested(Event ev) {
+        Event event = new Event("ReportGenerated", new Object[] { loggedTransactionList });
+        queue.publish(event);
+        return loggedTransactionList;
     }
 
     public List<LoggedTransaction> getTransactionList() {
