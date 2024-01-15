@@ -1,4 +1,4 @@
-package reporting.service;
+package logging.service;
 
 import messaging.implementations.RabbitMqQueue;
 
@@ -10,6 +10,6 @@ public class StartUp {
 	private void startUp() throws Exception {
 		System.out.println("startup");
 		var mq = new RabbitMqQueue("rabbitMq");
-		new ReportingService(mq);
+		new LoggingService(mq);
 	}
 }

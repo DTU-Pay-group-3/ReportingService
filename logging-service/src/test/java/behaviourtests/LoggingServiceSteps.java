@@ -8,31 +8,31 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import messaging.Event;
 import messaging.MessageQueue;
-import reporting.service.ReportingService;
-import reporting.service.Transaction;
+import logging.service.LoggingService;
+import logging.service.LoggedTransaction;
 
 import java.math.BigDecimal;
 
-public class ReportingServiceSteps {
+public class LoggingServiceSteps {
 	MessageQueue queue = mock(MessageQueue.class);
 
-	ReportingService reportingService = new ReportingService(queue);
-	Transaction expected;
+	LoggingService loggingService = new LoggingService(queue);
+	LoggedTransaction expected;
     @When("a {string} event for a transaction is received")
     public void aEventForATransactionIsReceived(String eventName) {
-		expected = new Transaction();
+		expected = new LoggedTransaction();
 		expected.setTo("");
 		expected.setFrom("");
 		expected.setToken("");
 		expected.setAmount(BigDecimal.valueOf(1000));
 
-		assertFalse(reportingService.getTransactionList().contains(expected));
-		reportingService.handleMoneyTransferred(new Event(eventName,new Object[] {expected}));
+		assertFalse(loggingService.getTransactionList().contains(expected));
+		loggingService.handleMoneyTransferred(new Event(eventName,new Object[] {expected}));
     }
 
     @Then("the transaction is logged")
     public void theTransactionIsLogged() {
-		assertTrue(reportingService.getTransactionList().contains(expected));
+		assertTrue(loggingService.getTransactionList().contains(expected));
     }
 }
 
