@@ -1,7 +1,7 @@
-package studentregistration.service.adapter.rest;
+package reporting.service.adapter.rest;
 
 import messaging.implementations.RabbitMqQueue;
-import studentregistration.service.ReportingService;
+import reporting.service.ReportingService;
 
 public class ReportingFactory {
 	static ReportingService service = null;

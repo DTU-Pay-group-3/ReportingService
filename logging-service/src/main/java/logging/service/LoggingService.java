@@ -3,6 +3,7 @@ package logging.service;
 import messaging.Event;
 import messaging.MessageQueue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class LoggingService {
     MessageQueue queue;
-    List<LoggedTransaction> loggedTransactionList = new ArrayList<>(); //TODO Use synchronized list instead of arraylist? https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedList(java.util.List)
+    //TODO Currently instantiating list with value for testing purposes
+    List<LoggedTransaction> loggedTransactionList = new ArrayList<>(){{add(new LoggedTransaction(BigDecimal.valueOf(1000), "1122330000", "3322119999", "xyz"));}}; //TODO Use synchronized list instead of arraylist? https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedList(java.util.List)
 
     private CompletableFuture<LoggedTransaction> registeredTransaction; //TODO necessary?
 

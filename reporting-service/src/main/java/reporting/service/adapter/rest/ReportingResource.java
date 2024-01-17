@@ -1,11 +1,12 @@
-package studentregistration.service.adapter.rest;
+package reporting.service.adapter.rest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import studentregistration.service.LoggedTransaction;
-import studentregistration.service.ReportingService;
+import reporting.service.LoggedTransaction;
+import reporting.service.ReportingService;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ReportingResource {
 	@Path("/merchant/{merchantId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<LoggedTransaction> getReportsMerchant(@PathParam("merchantId") String merchantId) {
-		return new ArrayList<>();
+		return new ArrayList<>(){{add(new LoggedTransaction(BigDecimal.valueOf(1000), "Merchant", "", ""));}};
 //		return service.getReportsMerchant(merchantId);
 	}
 
@@ -35,7 +36,7 @@ public class ReportingResource {
 	@Path("/manager")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<LoggedTransaction> getReportsManager() {
-		return new ArrayList<>();
+		return new ArrayList<>(){{add(new LoggedTransaction(BigDecimal.valueOf(1000), "Manager", "", ""));}};
 //		return service.getReportsManager();
 	}
 }

@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-hotspot
+FROM eclipse-temurin:21 as jre-build
 COPY target/lib /usr/src/lib
 COPY target/reporting-service-1.0.0-runner.jar /usr/src/
 WORKDIR /usr/src/

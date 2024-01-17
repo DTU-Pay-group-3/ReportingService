@@ -1,4 +1,4 @@
-package studentregistration.service;
+package reporting.service;
 
 import java.math.BigDecimal;
 import java.util.Objects;

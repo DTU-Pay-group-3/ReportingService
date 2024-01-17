@@ -1,4 +1,4 @@
-package studentregistration.service;
+package reporting.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,6 @@ import java.util.concurrent.CompletableFuture;
 
 import messaging.Event;
 import messaging.MessageQueue;
-
-import javax.ws.rs.core.GenericType;
 
 public class ReportingService {
 
