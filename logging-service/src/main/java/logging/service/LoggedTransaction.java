@@ -1,21 +1,21 @@
-package reporting.service;
+package logging.service;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Transaction {
+public class LoggedTransaction {
     BigDecimal amount;
     String from, to;
     String token;
 
-    public Transaction(BigDecimal amount, String from, String to, String token) {
+    public LoggedTransaction(BigDecimal amount, String from, String to, String token) {
         this.amount = amount;
         this.from = from;
         this.to = to;
         this.token = token;
     }
 
-    public Transaction() {
+    public LoggedTransaction() {
 
     }
 
@@ -55,7 +55,7 @@ public class Transaction {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
+        LoggedTransaction that = (LoggedTransaction) o;
         return Objects.equals(amount, that.amount) && Objects.equals(from, that.from) && Objects.equals(to, that.to) && Objects.equals(token, that.token);
     }
 

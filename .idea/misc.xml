@@ -5,7 +5,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/reporting-service/pom.xml" />
+        <option value="$PROJECT_DIR$/student-registration-service/pom.xml" />
+        <option value="$PROJECT_DIR$/logging-service/pom.xml" />
+        <option value="$PROJECT_DIR$/messaging-utilities-3.4/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/reporting-service/pom.xml" />
+      </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
