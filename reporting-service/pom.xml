@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dk.dtu.compute</groupId>
 	<artifactId>reporting-service</artifactId>
-	<name>ReportingService</name>
+	<name>reportingService</name>
 	<version>1.0.0</version>
 	<properties>
 		<surefire-plugin.version>2.22.1</surefire-plugin.version>
