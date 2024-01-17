@@ -17,7 +17,6 @@ public class ReportingService {
 
 	public ReportingService(MessageQueue q) {
 		queue = q;
-		queue.addHandler("TransactionLogged", this::handleTransactionLogged);
 		queue.addHandler("ReportGenerated", this::handleReportGenerated);
 	}
 
@@ -46,19 +45,5 @@ public class ReportingService {
 		//TODO Not sure if this works
 		var r = e.getArgument(0, new ArrayList<LoggedTransaction>().getClass());
 		report.complete(r);
-	}
-
-
-	//TODO ONLY USE FOR TESTING - REPORTING SERVICE SHOULD NOT LOG TRANSACTIONS
-	public LoggedTransaction logTransaction(LoggedTransaction transaction) {
-		transactionLogged = new CompletableFuture<>();
-		Event event = new Event("LogTransactionRequested", new Object[] {transaction});
-		queue.publish(event);
-		return transactionLogged.join();
-	}
-	//TODO ONLY USE FOR TESTING - REPORTING SERVICE SHOULD NOT LOG TRANSACTIONS
-	public void handleTransactionLogged(Event e) {
-		var t = e.getArgument(0, LoggedTransaction.class);
-		transactionLogged.complete(t);
 	}
 }

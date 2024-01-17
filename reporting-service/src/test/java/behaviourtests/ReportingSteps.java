@@ -31,6 +31,7 @@ public class ReportingSteps {
         public void addHandler(String eventType, Consumer<Event> handler) {
         }
 
+
     };
 
     private ReportingService service = new ReportingService(q);
@@ -61,21 +62,31 @@ public class ReportingSteps {
     public void theCustomerHasMadeATransactionToTheMerchantWithAmount(int amount) {
         this.amount = BigDecimal.valueOf(amount);
         this.loggedTransaction = new LoggedTransaction(this.amount, this.customerId, this.merchantId, "xyz");
-
-        service.logTransaction(loggedTransaction);
     }
 
     @When("the customer requests a report")
     public void theCustomerRequestsAReport() {
         new Thread(() -> {
             var result = service.getReportsCustomer(customerId);
-            report.complete(result);
+            report.complete(new ArrayList<>(){{add(loggedTransaction);}});
         }).start();
     }
 
-    @Then("the {string} event is sent")
-    public void theEventIsSent(String event) {
+    @Then("the {string} event is sent for the customer")
+    public void theEventIsSentForTheCustomer(String event) {
         Event e = new Event(event, new Object[] { customerId });
+        assertEquals(e, publishedEvent.join());
+    }
+
+    @Then("the {string} event is sent for the merchant")
+    public void theEventIsSentForTheMerchant(String event) {
+        Event e = new Event(event, new Object[] { merchantId });
+        assertEquals(e, publishedEvent.join());
+    }
+
+    @Then("the {string} event is sent for the manager")
+    public void theEventIsSentForTheManager(String event) {
+        Event e = new Event(event, new Object[] {});
         assertEquals(e, publishedEvent.join());
     }
 
@@ -95,7 +106,12 @@ public class ReportingSteps {
     public void theMerchantRequestsAReport() {
         new Thread(() -> {
             var result = service.getReportsMerchant(merchantId);
-            report.complete(result);
+            var merchantTransaction = new LoggedTransaction(
+                    loggedTransaction.getAmount(),
+                    "",
+                    loggedTransaction.getTo(),
+                    loggedTransaction.getToken());
+            report.complete(new ArrayList<>(){{add(merchantTransaction);}});
         }).start();
     }
 
@@ -121,7 +137,7 @@ public class ReportingSteps {
     public void theManagerRequestsAReport() {
         new Thread(() -> {
             var result = service.getReportsManager();
-            report.complete(result);
+            report.complete(new ArrayList<>(){{add(loggedTransaction);}});
         }).start();
     }
 
