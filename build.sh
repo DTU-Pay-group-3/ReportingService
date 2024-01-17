@@ -11,8 +11,4 @@ popd
 # Build the services
 pushd logging-service
 ./build.sh
-popd 
-
-pushd reporting-service
-./build.sh
-popd 
+popd

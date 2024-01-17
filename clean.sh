@@ -7,8 +7,4 @@ popd
 
 pushd logging-service
 mvn clean
-popd 
-
-pushd reporting-service
-mvn clean
-popd 
+popd
