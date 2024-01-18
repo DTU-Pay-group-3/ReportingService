@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="messaging-utilities" />
-        <module name="logging-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="logging-service" target="11" />
       <module name="reporting-service" target="11" />
     </bytecodeTargetLevel>
   </component>

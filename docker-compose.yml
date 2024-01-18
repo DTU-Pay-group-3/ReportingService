@@ -1,12 +1,6 @@
 version: '3'
 services:
-  rabbitMq:
-    image: rabbitmq:3-management
-    container_name: rabbitMq_container
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
   logging-service:
     image: logging
-    container_name: logging
+    build: logging-service
+ 

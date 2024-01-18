@@ -133,8 +133,8 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-								${project.build.directory}/lib/
-							</outputDirectory>
+                                target/lib
+                            </outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
