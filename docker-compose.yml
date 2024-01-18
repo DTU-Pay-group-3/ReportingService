@@ -1,6 +1,6 @@
 version: '3'
 services:
-  logging-service:
-    image: logging
-    build: logging-service
+  reporting-service:
+    image: reporting-service
+    build: .
  

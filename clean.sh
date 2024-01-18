@@ -5,6 +5,6 @@ pushd messaging-utilities-3.4
 mvn clean
 popd 
 
-pushd logging-service
+pushd reporting-service
 mvn clean
 popd

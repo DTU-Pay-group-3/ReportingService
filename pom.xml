@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dk.dtu.compute</groupId>
-	<artifactId>logging-service</artifactId>
-	<name>loggingService</name>
+	<artifactId>ReportingService</artifactId>
+	<name>reportingService</name>
 	<version>1.0.0</version>
 
 	<properties>
@@ -114,7 +114,7 @@
 						<index>true</index>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>logging.service.StartUp</mainClass>
+							<mainClass>reporting.service.StartUp</mainClass>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 					</archive>

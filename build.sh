@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 mvn clean package
-docker-compose build logging-service
+docker-compose build reporting-service

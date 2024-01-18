@@ -10,16 +10,16 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import messaging.Event;
 import messaging.MessageQueue;
-import logging.service.LoggingService;
-import logging.service.LoggedTransaction;
+import reporting.service.ReportingService;
+import reporting.service.LoggedTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class LoggingServiceSteps {
+public class ReportingServiceSteps {
 	MessageQueue queue = mock(MessageQueue.class);
 
-	LoggingService loggingService = new LoggingService(queue);
+	ReportingService reportingService = new ReportingService(queue);
 	LoggedTransaction expected;
 	LoggedTransaction otherTransaction;
 
@@ -35,13 +35,13 @@ public class LoggingServiceSteps {
 		expected.setToken("");
 		expected.setAmount(BigDecimal.valueOf(1000));
 
-		assertFalse(loggingService.getTransactionList().contains(expected));
-		loggingService.handleMoneyTransferred(new Event(eventName,new Object[] {expected}));
+		assertFalse(reportingService.getTransactionList().contains(expected));
+		reportingService.handleMoneyTransferred(new Event(eventName,new Object[] {expected}));
     }
 
     @Then("the transaction is logged")
     public void theTransactionIsLogged() {
-		assertTrue(loggingService.getTransactionList().contains(expected));
+		assertTrue(reportingService.getTransactionList().contains(expected));
     }
 
 	@Given("a customer with id {string} exists")
@@ -56,30 +56,30 @@ public class LoggingServiceSteps {
 	@And("a transaction made by the customer has been logged")
 	public void aTransactionMadeByTheCustomerHasBeenLogged() {
 		expected = new LoggedTransaction(BigDecimal.valueOf(1000), customerId, merchantId, "xyz");
-		loggingService.getTransactionList().add(expected);
+		reportingService.getTransactionList().add(expected);
 	}
 
 	@And("another transaction by two other parts has been logged")
 	public void anotherTransactionByTwoOtherPartsHasBeenLogged() {
 		expected = new LoggedTransaction(BigDecimal.valueOf(1000), customerId, merchantId, "xyz");
 		otherTransaction = new LoggedTransaction(BigDecimal.valueOf(1000), "someCustomer", "someMerchant", "abc");
-		loggingService.getTransactionList().add(expected);
-		loggingService.getTransactionList().add(otherTransaction);
+		reportingService.getTransactionList().add(expected);
+		reportingService.getTransactionList().add(otherTransaction);
 	}
 
 	@When("a {string} event for the customer is received")
 	public void aEventForTheCustomerIsReceived(String ev) {
-		result = loggingService.handleReportCustomerRequested(new Event(ev,new Object[] {customerId}));
+		result = reportingService.handleReportCustomerRequested(new Event(ev,new Object[] {customerId}));
 	}
 
 	@When("a {string} event for the merchant is received")
 	public void aEventForTheMerchantIsReceived(String ev) {
-		result = loggingService.handleReportMerchantRequested(new Event(ev,new Object[] {merchantId}));
+		result = reportingService.handleReportMerchantRequested(new Event(ev,new Object[] {merchantId}));
 	}
 
 	@When("a {string} event for the manager is received")
 	public void aEventForTheManagerIsReceived(String ev) {
-		result = loggingService.handleReportManagerRequested(new Event(ev,new Object[] {}));
+		result = reportingService.handleReportManagerRequested(new Event(ev,new Object[] {}));
 	}
 
 	@Then("a report for the customer is generated")
