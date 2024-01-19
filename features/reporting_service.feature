@@ -1,9 +1,11 @@
 Feature: Logging money transfer
 
+  # @Author: Jacob
   Scenario: Log money transferred event
     When a "MoneyTransferred" event for a transaction is received
     Then the transaction is logged
 
+  # @Author: Andreas
   Scenario: A customer requests a report
     Given a customer with id "1122330000" exists
     And a merchant with id "3322119999" exists
@@ -12,6 +14,7 @@ Feature: Logging money transfer
     Then a report for the customer is generated
     And a "ReportGenerated" event is sent
 
+  # @Author: Caroline
   Scenario: A merchant requests a report
     Given a customer with id "1122330000" exists
     And a merchant with id "3322119999" exists
@@ -20,6 +23,7 @@ Feature: Logging money transfer
     Then a report for the merchant is generated
     And a "ReportGenerated" event is sent
 
+  # @Author: Jacob
   Scenario: A manager requests a report
     Given a customer with id "1122330000" exists
     And a merchant with id "3322119999" exists

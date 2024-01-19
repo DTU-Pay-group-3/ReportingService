@@ -10,11 +10,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class ReportingService {
     MessageQueue queue;
-    //TODO Currently instantiating list with value for testing purposes
-    List<LoggedTransaction> loggedTransactionList = new ArrayList<>(){{add(new LoggedTransaction(BigDecimal.valueOf(1000), "1122330000", "3322119999", "xyz"));}}; //TODO Use synchronized list instead of arraylist? https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedList(java.util.List)
+    List<LoggedTransaction> loggedTransactionList = new ArrayList<>(){};
 
-    private CompletableFuture<LoggedTransaction> registeredTransaction; //TODO necessary?
-
+    // @Author: Jacob
     public ReportingService(MessageQueue q) {
         this.queue = q;
         this.queue.addHandler("MoneyTransferred", this::handleMoneyTransferred);
@@ -23,13 +21,13 @@ public class ReportingService {
         this.queue.addHandler("ReportManagerRequested", this::handleReportManagerRequested);
     }
 
+    // @Author: Jacob
     public void handleMoneyTransferred(Event ev) {
-//        registeredTransaction = new CompletableFuture<>(); //TODO Is having a completeablefuture required when we're not doing anything else in the method?
         var t = ev.getArgument(0, LoggedTransaction.class);
         loggedTransactionList.add(t);
-//        registeredTransaction.complete(t);
     }
 
+    // @Author Caroline
     public List<LoggedTransaction> handleReportCustomerRequested(Event ev) {
         var customerId = ev.getArgument(0, String.class);
 
@@ -45,6 +43,7 @@ public class ReportingService {
         return transactionsForCustomer;
     }
 
+    // @Author: Andreas
     public List<LoggedTransaction> handleReportMerchantRequested(Event ev) {
         var merchantId = ev.getArgument(0, String.class);
 
@@ -61,6 +60,7 @@ public class ReportingService {
         return transactionsForMerchant;
     }
 
+    // @Author: Jacob
     public List<LoggedTransaction> handleReportManagerRequested(Event ev) {
         Event event = new Event("ReportGenerated", new Object[] { loggedTransactionList });
         queue.publish(event);

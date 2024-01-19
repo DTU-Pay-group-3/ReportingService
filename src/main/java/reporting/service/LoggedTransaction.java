@@ -3,6 +3,7 @@ package reporting.service;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// @Author for entire class: Jacob
 public class LoggedTransaction {
     BigDecimal amount;
     String from, to;

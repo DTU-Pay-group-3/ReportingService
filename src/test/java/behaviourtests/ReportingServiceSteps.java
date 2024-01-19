@@ -16,6 +16,7 @@ import reporting.service.LoggedTransaction;
 import java.math.BigDecimal;
 import java.util.List;
 
+// @Author for entire class: Andreas
 public class ReportingServiceSteps {
 	MessageQueue queue = mock(MessageQueue.class);
 
